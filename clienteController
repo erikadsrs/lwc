@@ -1,0 +1,35 @@
+public with sharing class ClienteController {
+
+    @AuraEnabled //permite fazer uma tela
+    public static Account getClientePorCNPJ(Account conta){
+        try {
+            insert conta; //entrada
+            
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+        return conta; //saída
+    }    
+
+    //pesquisa Mercado
+    @AuraEnabled(cacheable=true)
+    public static List<Account> getAccountMercadoList() {
+        return[
+            SELECT Id, Name, Type
+            FROM Account
+            WHERE Industry = 'Mercado'
+            ORDER BY Name ASC
+            ];
+    }
+
+    //pesquisa Padaria
+    @AuraEnabled(cacheable=true)
+    public static List<Account> getAccountPadariaList() {
+        return[
+            SELECT Id, Name, Type
+            FROM Account
+            WHERE Industry = 'Padaria'
+            ORDER BY Name ASC
+            ];
+    }
+}
